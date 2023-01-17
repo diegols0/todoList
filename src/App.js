@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+
+import Title from "./style/style";
+
 function Task({add, index, tasks, setTasks, excluirItem}) {
   const [checked,setChecked] = useState(false);
 
@@ -7,6 +10,7 @@ function Task({add, index, tasks, setTasks, excluirItem}) {
     <>
       <input type="checkbox" checked={checked} onChange={() => setChecked(!checked)}></input>
       <p id="text" style={{textDecoration:checked ? "line-through" : ""}}>{ add }</p>
+      <button>edit</button>
       <button onClick={() => excluirItem(index)}>X</button>
     </>
   )
@@ -19,7 +23,7 @@ function App() {
 
   function adicionaList(e) {
     e.preventDefault();
-    setTasks([...tasks, {text: task, check:false}]);
+    setTasks([...tasks, task]);
     console.log(task);
   }
 
@@ -33,20 +37,22 @@ function App() {
  
 
   return (
-    <div className="App">
-      <h1>TO-DO-LIST</h1>
-      <form onSubmit={ adicionaList }>
-        <input type="text" onChange={(e) => setTask(e.target.value)}></input>
-        <input type="submit" value="+"></input>
-      </form>
-      {tasks.map((add, index) => {
-        return (
-        <Task key={index} add={ add } index={ index } tasks={ tasks } setTasks={ setTasks } excluirItem={ excluirItem }>
-        </Task>
-        )
-      } )}
-      <button>Remove Checked</button>
-    </div>
+    <body>
+      <div className="App">
+        <Title>TO-DO-LIST</Title>
+        <form onSubmit={adicionaList}>
+          <input type="text" onChange={(e) => setTask(e.target.value)}></input>
+          <input type="submit" value="+"></input>
+        </form>
+        {tasks.map((add, index) => {
+          return (
+            <Task key={index} add={add} index={index} tasks={tasks} setTasks={setTasks} excluirItem={excluirItem}>
+            </Task>
+          )
+        })}
+        <button>Remove Checked</button>
+      </div>
+    </body>
   );
 }
 
